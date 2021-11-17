@@ -1,8 +1,8 @@
 static char * test_xpm[] = {
-"3 4 3 1",
+"3 4 2 1",
 "0 	c None",
-"x	c #3A32E4",
-"X	c #E43232",
+"x	c #00FF00",
+"X	c #00FF00",
 "XxX",
 "X0X",
 "X0X",
