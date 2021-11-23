@@ -1,10 +1,10 @@
-SRCS = main.c
+SRCS = map.c gnl.c utils.c utils2.c display.c error.c events.c utils3.c loop.c
 
-DIRECTORYS = ./
+MAIN = main.c
+
+DIRECTORYS = srcs/
 
 SRCSD =	$(addprefix ${DIRECTORYS}, $(SRCS))
-
-OBJS =	${SRCSD:.c=.o}
 
 EFLAGS = -Wall -Wextra -Werror
 
@@ -12,13 +12,10 @@ HEADER = include/so_long.h
 
 OFLAGS = -c
 
-NAME   = yolo
+NAME   = so_long
 
-%.o: %.c ${HEADER}
-	gcc -Wall -Wextra -Werror -Imlx -c $< -o $@
-
-${NAME}: ${OBJS}
-	gcc -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+${NAME}: 
+	gcc  -lmlx -framework OpenGL -framework AppKit $(EFLAGS) -o $(NAME) $(MAIN) ${SRCSD}
 			
 all:	${NAME}
 

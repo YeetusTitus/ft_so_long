@@ -1,6 +1,0 @@
-static char * test2_xpm[] = {
-"51 2 2 1",
-"0 	c None",
-"x	c #FF0000",
-"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"};
