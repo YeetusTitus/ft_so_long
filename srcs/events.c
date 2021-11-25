@@ -6,17 +6,35 @@
 /*   By: jforner <jforner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:20:15 by jforner           #+#    #+#             */
-/*   Updated: 2021/11/23 15:46:56 by jforner          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:35:17 by jforner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
+int	red_cross(int keycode, int x, int y, t_map *map)
+{
+	(void)keycode;
+	(void)x;
+	(void)y;
+	(void)map;
+	exit(EXIT_SUCCESS);
+}
+
 int	wclose(t_map *map)
 {
+	int	y;
+
+	delete_screen(map);
+	y = -1;
+	while (++y < map->height)
+		free(map->map[y]);
 	free(map->map);
-	mlx_destroy_window(map->mlx, map->win);
-	exit(1);
+	while (++y < map->height)
+		free(map->mapc[y]);
+	free(map->mapc);
+	free(map->mlx);
+	exit(EXIT_SUCCESS);
 	return (1);
 }
 
@@ -35,6 +53,8 @@ int	move_on_win(int keycode, t_map *map)
 		change_play(map, co, co[0] + 1, co[1]);
 	if (keycode == 13)
 		change_play(map, co, co[0], co[1] - 1);
+	portal_activate(map);
+	dead_mogus(map);
 	return (1);
 }
 
@@ -54,7 +74,6 @@ void	change_play(t_map *map, int co[], int x2, int y2)
 				x2 * 64, y2 * 64);
 			map->map[co[1]][co[0]] = '0';
 			map->map[y2][x2] = 'P';
-			portal_activate(map);
 			walkcount(map);
 		}
 	}

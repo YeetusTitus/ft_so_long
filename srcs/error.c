@@ -6,7 +6,7 @@
 /*   By: jforner <jforner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:56:13 by jforner           #+#    #+#             */
-/*   Updated: 2021/11/22 20:22:14 by jforner          ###   ########.fr       */
+/*   Updated: 2021/11/25 17:16:56 by jforner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,19 @@ int	ft_puterror(int argc, t_map *map, char *str)
 		ft_putstr_fd("It's not a .ber file\n", 1);
 	else
 		ft_putstr_fd(strerror(errno), 1);
+	return (0);
+}
+
+int	fileverif(char *str)
+{
+	int		i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '.' && str[i + 1] == 'b' && str[i + 2] == 'e'
+			&& str[i + 3] == 'r' && str[i + 4] == '\0')
+			return (1);
+	}
 	return (0);
 }

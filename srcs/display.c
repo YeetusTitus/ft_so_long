@@ -6,39 +6,11 @@
 /*   By: jforner <jforner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:20:07 by jforner           #+#    #+#             */
-/*   Updated: 2021/11/23 16:13:51 by jforner          ###   ########.fr       */
+/*   Updated: 2021/11/24 21:18:02 by jforner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-void	color(t_map *map, int x, int y)
-{
-	static size_t	count = 0;
-	char			*color;
-
-	color = ft_strndup("bmglpv", ft_strlenn("bmglpv", 0));
-	if (color[count % ft_strlenn(color, 0)] == 'b')
-		mlx_put_image_to_window(map->mlx, map->win, map->img.blue,
-			x * 64, y * 64);
-	if (color[count % ft_strlenn(color, 0)] == 'm')
-		mlx_put_image_to_window(map->mlx, map->win, map->img.maroon,
-			x * 64, y * 64);
-	if (color[count % ft_strlenn(color, 0)] == 'g')
-		mlx_put_image_to_window(map->mlx, map->win, map->img.grey,
-			x * 64, y * 64);
-	if (color[count % ft_strlenn(color, 0)] == 'l')
-		mlx_put_image_to_window(map->mlx, map->win, map->img.lime,
-			x * 64, y * 64);
-	if (color[count % ft_strlenn(color, 0)] == 'p')
-		mlx_put_image_to_window(map->mlx, map->win, map->img.pink,
-			x * 64, y * 64);
-	if (color[count % ft_strlenn(color, 0)] == 'v')
-		mlx_put_image_to_window(map->mlx, map->win, map->img.violet,
-			x * 64, y * 64);
-	free(color);
-	count++;
-}
 
 void	displayif(t_map *map, int y, int x)
 {
@@ -66,9 +38,12 @@ int	displaymap(t_map *map)
 	int		y;
 
 	y = -1;
+	map->mapc = (char **)malloc((sizeof(char *) * map->height) + 1);
 	while (++y < map->height)
 	{
 		x = -1;
+		map->mapc[y] = (char *)malloc((sizeof(char) * map->lenght) + 1);
+		ft_strncpy(map->mapc[y], map->map[y], map->lenght);
 		while (++x < map->lenght)
 		{
 			displayif(map, y, x);

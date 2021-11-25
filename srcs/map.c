@@ -6,7 +6,7 @@
 /*   By: jforner <jforner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:00:23 by jforner           #+#    #+#             */
-/*   Updated: 2021/11/23 16:24:26 by jforner          ###   ########.fr       */
+/*   Updated: 2021/11/25 16:50:48 by jforner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ int	map_size(char *str, t_map *map)
 {
 	map->lenght = ft_strlenn(str, 1);
 	map->height = 0;
-	while (str)
+	while (str[0])
 	{
+		if (str[0])
+			free(str);
 		if (map->lenght != (int)ft_strlenn(str, 1))
 		{
 			close (map->fd);
@@ -67,13 +69,9 @@ int	map_size(char *str, t_map *map)
 			return (0);
 		}
 		map->height++;
-		if (str)
-			free(str);
-		str = (char *)malloc(map->lenght * sizeof(char) + 1);
-		str = get_next_line(map->fd);
+		str = ft_substr(get_next_line(map->fd), 0, map->lenght);
 	}
-	if (str)
-		free(str);
+	free(str);
 	return (1);
 }
 
@@ -82,23 +80,24 @@ int	map_check(char *str, t_map *map)
 	char	*line;
 
 	map->error = '0';
-	map->fd = open(str, O_RDONLY);
-	if (map->fd == -1 || !fileverif(str))
+	map->fd = open(str, O_RDWR);
+	if (map->fd < 0 || !fileverif(str))
 		return (0);
 	line = get_next_line(map->fd);
+	if (line == NULL)
+	{
+		map->error = 'F';
+		return (0);
+	}
 	if (!map_size(line, map))
 		return (0);
 	close(map->fd);
-	free(line);
-	if (map->lenght == 0 || map->height == 0)
-		map->error = 'F';
 	return (map->lenght);
 }
 
 int	mapcontrol(char *str, t_map	*map)
 {
 	int		y;
-	int		fd;
 
 	if (!map_check(str, map))
 		return (0);
@@ -106,18 +105,17 @@ int	mapcontrol(char *str, t_map	*map)
 	map->nbexit = 0;
 	map->nbplay = 0;
 	y = -1;
-	fd = open(str, O_RDONLY);
+	map->fd = open(str, O_RDONLY);
 	map->map = (char **)malloc(map->height * sizeof(char *) + 1);
 	while (++y < map->height)
 	{
-		map->map[y] = (char *)malloc(map->lenght * sizeof(char) + 1);
-		map->map[y] = get_next_line(fd);
+		map->map[y] = ft_substr(get_next_line(map->fd), 0, map->lenght);
 		if (map->map[y][0] != '1' || map->map[y][map->lenght - 1] != '1')
 		{
 			map->error = '1';
 			return (0);
 		}
 	}
-	close(fd);
+	close(map->fd);
 	return (maperror(map));
 }

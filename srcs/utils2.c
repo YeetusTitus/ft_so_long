@@ -6,26 +6,23 @@
 /*   By: jforner <jforner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 18:59:03 by jforner           #+#    #+#             */
-/*   Updated: 2021/11/22 21:50:06 by jforner          ###   ########.fr       */
+/*   Updated: 2021/11/25 11:44:04 by jforner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-char	*ft_strndup(char *str, int n)
+void	ft_strncpy(char *dest, char *src, int size)
 {
-	int		i;
-	char	*dest;
+	int	i;
 
 	i = 0;
-	dest = malloc(n * sizeof(char) + 1);
-	while (str[i] && i < n)
+	while (src[i] != '\0' && i < size)
 	{
-		dest[i] = str[i];
+		dest[i] = src[i];
 		i++;
 	}
-	dest[i] = 0;
-	return (dest);
+	dest[i] = '\0';
 }
 
 void	ft_putchar_fd(char c, int fd)
@@ -40,20 +37,6 @@ void	ft_putstr_fd(char *s, int fd)
 		ft_putchar_fd(*s, fd);
 		s++;
 	}
-}
-
-int	fileverif(char *str)
-{
-	int		i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '.' && str[i + 1] == 'b' && str[i + 2] == 'e'
-			&& str[i + 3] == 'r' && str[i + 4] == '\0')
-			return (1);
-	}
-	return (0);
 }
 
 void	ft_putunbr(unsigned int nb)
