@@ -6,7 +6,7 @@
 /*   By: jforner <jforner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:00:23 by jforner           #+#    #+#             */
-/*   Updated: 2021/11/25 16:50:48 by jforner          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:27:18 by jforner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	map_size(char *str, t_map *map)
 {
 	map->lenght = ft_strlenn(str, 1);
 	map->height = 0;
-	while (str[0])
+	while (ft_strlenn(str, 0))
 	{
 		if (str[0])
 			free(str);
@@ -69,7 +69,7 @@ int	map_size(char *str, t_map *map)
 			return (0);
 		}
 		map->height++;
-		str = ft_substr(get_next_line(map->fd), 0, map->lenght);
+		str = get_next_line(map->fd);
 	}
 	free(str);
 	return (1);
