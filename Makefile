@@ -29,7 +29,16 @@ clean:
 
 fclean:	clean
 		rm  -f ${NAME}
+		
+mlx:	
+	(cd mlx && make)
+	make ${NAME}
+	
+
+mlxclean : 
+	(cd mlx && make clean)
+	make fclean
 
 re:		fclean all
 
-.PHONY:	all clean fclean re
+.PHONY:	all clean fclean re mlx mlxclean
